@@ -1,0 +1,28 @@
+{
+  "name": "smartcrop-sharp",
+  "version": "1.0.5",
+  "description": "smartcrop adapter for sharp",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "author": {
+    "name": "Jonas Wagner",
+    "email": "jonas@29a.ch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "smartcrop": "^1.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  },
+  "gitHead": "1e94fe09c5a1c1d274e8515c4ba4f92339ab3229",
+  "readme": "# smartcrop-sharp\n\n[![Build Status](https://travis-ci.org/jwagner/smartcrop-sharp.svg?branch=master)](https://travis-ci.org/jwagner/smartcrop-sharp)\n\nThis is an adapter module for using [smartcrop.js](https://github.com/jwagner/smartcrop.js)\nwith node.js using [sharp](https://github.com/lovell/sharp) for image decoding.\n\n## Installation\n```\nnpm install --save smartcrop-sharp\n```\n\n## API\n\n## crop(image, options)\n\n**Image:** string (path to file) or buffer\n\n**Options:** options object to be passed to smartcrop\n\n**returns:** A promise for a cropResult\n\n## Example\n\n```javascript\nvar request = require('request');\nvar sharp = require('sharp');\nvar smartcrop = require('smartcrop-sharp');\n\nfunction applySmartCrop(src, dest, width, height) {\n  request(src, {encoding: null}, function process(error, response, body) {\n    if (error) return console.error(error);\n    smartcrop.crop(body, {width: width, height: height}).then(function(result) {\n      var crop = result.topCrop;\n      sharp(body)\n        .extract({width: crop.width, height: crop.height, left: crop.x, top: crop.y})\n        .resize(width, height)\n        .toFile(dest);\n    });\n  });\n}\n\nvar src = 'https://raw.githubusercontent.com/jwagner/smartcrop-gm/master/test/flower.jpg';\napplySmartCrop(src, 'flower-square.jpg', 128, 128);\n\n\n```\n\n## Face Detection Example\n  Check out [smartcrop-cli](https://github.com/jwagner/smartcrop-cli/) for a more advanced [example](https://github.com/jwagner/smartcrop-cli/blob/master/smartcrop-cli.js#L100) of how to use smartcrop from node  including face detection with opencv.\n",
+  "readmeFilename": "README.md",
+  "_id": "smartcrop-sharp@1.0.5",
+  "_shasum": "811101682cbb845242df2456e3c7f5e0b20a042a",
+  "_from": "dadi/smartcrop-sharp",
+  "_resolved": "git://github.com/dadi/smartcrop-sharp.git#1e94fe09c5a1c1d274e8515c4ba4f92339ab3229"
+}
